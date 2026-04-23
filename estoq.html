@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sul Ferramentas - Catalogo de Serras</title>
+  <style>
+    :root {
+      --bg: #0b1620;
+      --bg-soft: #112230;
+      --card: #122636;
+      --line: #214058;
+      --text: #eaf2f8;
+      --muted: #9cb3c5;
+      --brand: #0ea5a4;
+      --brand-2: #14b8a6;
+      --ok: #34d399;
+      --danger: #fb7185;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      background: radial-gradient(circle at 20% 0%, #153043 0%, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      border-bottom: 1px solid #cbd5e1;
+      background: linear-gradient(180deg, #ffffff 0%, #eef4fb 100%);
+      position: sticky;
+      top: 10;
+      z-index: 10;
+    }
+
+    .wrap {
+      width: min(1200px, 94vw);
+      margin: 0 auto;
+    }
+
+    .topbar .wrap {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      min-height: 88px;
+    }
+
+    .brand-logo {
+      width: clamp(230px, 36vw, 200px);
+      height: clamp(62px, 9vw, 100px);
+      object-fit: contain;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .brand-tagline {
+      color: #12385f;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #d8e4ef;
+      border-radius: 999px;
+      padding: 8px 14px;
+    }
+
+    .hero {
+      padding: 28px 0 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.4rem, 2.8vw, 2rem);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 76ch;
+      line-height: 1.45;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #2f596f;
+      color: #d8e7f2;
+      background: #173548;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .link-btn:hover {
+      background: #1b4259;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(18, 38, 54, 0.9), rgba(14, 29, 41, 0.95));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .control {
+      background: #0e1f2b;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      width: 100%;
+      outline: none;
+    }
+
+    .control:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+    }
+
+    .btn {
+      border: 1px solid #2f596f;
+      color: #d8e7f2;
+      background: #173548;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn:hover {
+      background: #1b4259;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 6px 0 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .stats strong { color: #dffaf8; }
+
+    .admin-panel {
+      border: 1px solid #2b4b61;
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(8, 20, 28, 0.55);
+      margin-bottom: 14px;
+    }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .admin-title {
+      font-weight: 700;
+      color: #d8eefb;
+    }
+
+    .admin-note {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .admin-fields {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .admin-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .admin-field label {
+      color: #c9dfef;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .admin-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-secondary {
+      border: 1px solid #4a6a82;
+      color: #d4e6f3;
+      background: #1a3142;
+      border-radius: 10px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .cards-wrap {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      background: rgba(9, 18, 26, 0.6);
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      background: #0f2433;
+      border: 1px solid #24455d;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 390px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .product-media {
+      background: #ffffff;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .product-content {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .product-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.35;
+      min-height: 52px;
+    }
+
+    .product-meta {
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.35;
+    }
+
+    .sku {
+      color: #93c5fd;
+      font-size: 0.78rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .price-line {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      flex-wrap: wrap;
+      font-size: 0.88rem;
+    }
+
+    .price {
+      color: #fde68a;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .cost {
+      color: #cbd5e1;
+    }
+
+    .status-badge {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      border: 1px solid transparent;
+    }
+
+    .status-ok {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--ok);
+      border-color: rgba(52, 211, 153, 0.35);
+    }
+
+    .status-low {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+
+    .status-out {
+      background: rgba(244, 63, 94, 0.16);
+      color: #fda4af;
+      border-color: rgba(244, 63, 94, 0.35);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .mini-btn {
+      border: 1px solid #34586f;
+      background: #173548;
+      color: #def1ff;
+      border-radius: 8px;
+      padding: 6px 9px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .mini-btn.danger {
+      border-color: #7a2f42;
+      background: #4a1f2a;
+      color: #ffd7df;
+    }
+
+    .stock-badge {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--ok);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .no-data {
+      display: none;
+      padding: 16px;
+      border: 1px dashed #385a70;
+      border-radius: 10px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .foot {
+      margin: 16px 0 4px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .filters { grid-template-columns: 1fr; }
+      .admin-fields { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+      .topbar .wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .brand {
+        min-height: 64px;
+      }
+      .brand-logo {
+        width: clamp(200px, 62vw, 320px);
+        height: 62px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <img class="brand-logo" src="logo.png" alt="Logo Sul Ferramentas" />
+      </div>
+      <span class="brand-tagline">Solucoes em Cortes</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Catalogo Online de Serras Circulares</h1>
+      <p class="subtitle">
+        Consulta rapida de itens em estoque com busca por produto, marca e filtros.
+      </p>
+      <div class="hero-actions">
+        <a class="link-btn" href="precificacao.html">Ir para area de precificacao</a>
+      </div>
+
+      <div class="panel">
+        <div class="filters">
+          <input id="searchInput" class="control" type="search" placeholder="Buscar por produto ou marca..." />
+          <select id="categoryFilter" class="control">
+            <option value="">Todas as categorias</option>
+          </select>
+          <select id="brandFilter" class="control">
+            <option value="">Todas as marcas</option>
+          </select>
+          <select id="stockFilter" class="control">
+            <option value="">Todo o estoque</option>
+            <option value="ok">Estoque normal</option>
+            <option value="low">Baixo estoque</option>
+            <option value="out">Sem estoque</option>
+          </select>
+          <button id="clearBtn" class="btn" type="button">Limpar filtros</button>
+        </div>
+
+        <div class="stats">
+          <span>Produtos visiveis: <strong id="visibleItems">0</strong></span>
+          <span>Estoque visivel: <strong id="visibleStock">0</strong></span>
+          <span>Estoque total: <strong id="totalStock">0</strong></span>
+          <span>Custo visivel: <strong id="visibleCost">R$ 0,00</strong></span>
+          <span>Venda visivel: <strong id="visibleRevenue">R$ 0,00</strong></span>
+          <span>Margem estimada: <strong id="visibleMargin">R$ 0,00</strong></span>
+        </div>
+
+        <div class="admin-panel">
+          <div class="admin-header">
+            <div class="admin-title">Gerenciar catalogo (sem programacao)</div>
+            <div class="admin-note" id="syncStatus">As alteracoes ficam salvas no navegador deste computador.</div>
+          </div>
+          <div class="admin-fields">
+            <div class="admin-field"><label for="fSku">SKU</label><input id="fSku" class="control" type="text" /></div>
+            <div class="admin-field"><label for="fProduto">Produto*</label><input id="fProduto" class="control" type="text" /></div>
+            <div class="admin-field"><label for="fMarca">Marca*</label><input id="fMarca" class="control" type="text" /></div>
+            <div class="admin-field"><label for="fCategoria">Categoria*</label><input id="fCategoria" class="control" type="text" value="Serra" /></div>
+            <div class="admin-field"><label for="fQuantidade">Quantidade*</label><input id="fQuantidade" class="control" type="number" min="0" step="1" value="0" /></div>
+            <div class="admin-field"><label for="fEstoqueMin">Estoque minimo</label><input id="fEstoqueMin" class="control" type="number" min="0" step="1" value="2" /></div>
+            <div class="admin-field"><label for="fCusto">Custo (R$)</label><input id="fCusto" class="control" type="number" min="0" step="0.01" value="0" /></div>
+            <div class="admin-field"><label for="fPreco">Preco (R$)</label><input id="fPreco" class="control" type="number" min="0" step="0.01" value="0" /></div>
+            <div class="admin-field"><label for="fFornecedor">Fornecedor</label><input id="fFornecedor" class="control" type="text" /></div>
+            <div class="admin-field"><label for="fLocalizacao">Localizacao</label><input id="fLocalizacao" class="control" type="text" placeholder="A-1" /></div>
+            <div class="admin-field"><label for="fEntrada">Ultima entrada</label><input id="fEntrada" class="control" type="date" /></div>
+            <div class="admin-field"><label for="fImagem">Imagem (URL/caminho)</label><input id="fImagem" class="control" type="text" value="images/sem-imagem.png" /></div>
+          </div>
+          <div class="admin-actions">
+            <button id="saveItemBtn" class="btn" type="button">Salvar item</button>
+            <button id="newItemBtn" class="btn-secondary" type="button">Novo item</button>
+            <button id="resetDataBtn" class="btn-secondary" type="button">Restaurar dados iniciais</button>
+          </div>
+        </div>
+
+        <div class="cards-wrap">
+          <div id="catalogBody" class="catalog-grid"></div>
+        </div>
+
+        <div id="noData" class="no-data">Nenhum item encontrado para os filtros selecionados.</div>
+        <div class="foot">Use o painel de gerenciamento para cadastrar/editar itens sem alterar codigo.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const defaultImage = "images/sem-imagem.png";
+    const SUPABASE_URL = "https://yeigzdswdhigqidkzjyh.supabase.co";
+    const SUPABASE_ANON_KEY = "";
+    const SUPABASE_TABLE = "estoque_itens";
+
+    const initialProducts = [
+      // Modelo para novos itens:
+      // {
+      //   produto: "Nome do produto",
+      //   sku: "SER-001",
+      //   marca: "Marca",
+      //   categoria: "Serra",
+      //   quantidade: 1,
+      //   estoqueMinimo: 2,
+      //   custo: 120.0,
+      //   preco: 185.0,
+      //   fornecedor: "Fornecedor principal",
+      //   localizacao: "A-1",
+      //   ultimaEntrada: "2026-04-23",
+      //   imagem: "images/nome-do-arquivo.jpg"
+      // },
+      { produto: 'Serra Circular o10"x60Dx30mm', marca: "Rocast Perfection", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: "SCW ED O300x72Z 3,2/2,2 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: "Serra Circular HW 300x2,2x3,2x30-96Z ED BAIXO", marca: "INDFEMA", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: "Serra Circular HW 300x2,2x3,2x30-60Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: 'SCW O12"x48Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: "SCW HW 300x2,2x3,2x30-48Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 4, imagem: defaultImage },
+      { produto: "SCW ED O300x48Z 3,2/2,2 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: "Serra Circular HW 300x2,5x3,8x48Z", marca: "Sul Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: 'SCW O12"x60Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: "SCW ED O300x36Z 3,2/2,2 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: "Serra Circular HW 300x2,2x3,2x30-36Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 4, imagem: defaultImage },
+      { produto: 'SCW O12"x36Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 6, imagem: defaultImage },
+      { produto: "Serra Circular HW 300x2,2x3,2x30-24Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 5, imagem: defaultImage },
+      { produto: "SCW ED O300x24Z 3,2/2,2 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: 'SCW O12"x24Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 6, imagem: defaultImage },
+      { produto: "SCW ED O350x60Z 3,8/2,5 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: "Serra Circular HW 350x2,5x3,8x30-60Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: "SCW ED O350x72Z 3,8/2,5 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: 'SCW o14"x48Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 5, imagem: defaultImage },
+      { produto: "Serra Circular HW 350x2,5x3,8x30-48Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: "SCW ED O350x36Z 3,8/2,5 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: 'SCW O14"x36Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 4, imagem: defaultImage },
+      { produto: "Serra Circular HW 350x2,5x3,8x30-24Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: 'SCW O14"x24Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 4, imagem: defaultImage },
+      { produto: "SCW ED O350x24Z 3,8/2,5 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: "SCW ED O500x48Z 5,6/4,0 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 4, imagem: defaultImage },
+      { produto: "SCW ED/BR O450x72Z 5,1/3,5 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: "Serra Circular HW 450x3,0x4,5x30-60Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: "SCW 450x24Z Serra Nova", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: "Serra Circular HW 450x3,0x4,5x30-24Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: "SCW ED O450x36Z 5,1/3,5 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 4, imagem: defaultImage },
+      { produto: "Serra Circular HW 250x2,2x3,2x30-48Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: "Serra Circular HW 250x2,2x3,2x30-48Z ED", marca: "Sul Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: 'SCW O10"x48Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 2, imagem: defaultImage },
+      { produto: 'SCW O10"x36Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 3, imagem: defaultImage },
+      { produto: "Serra Circular HW 250x2,2x3,2x30-36Z ED", marca: "INDFEMA", categoria: "Serra", quantidade: 7, imagem: defaultImage },
+      { produto: 'SCW O10"x24Dx30mm Madeira', marca: "Rocast Perfection", categoria: "Serra", quantidade: 1, imagem: defaultImage },
+      { produto: "SCW ED O250x24Z 3,2/2,2 D30", marca: "Fepam Ferramentas", categoria: "Serra", quantidade: 2, imagem: defaultImage }
+    ];
+
+    function withDefaults(data) {
+      return data.map((item, index) => {
+        const custoPadrao = Number((95 + (index % 9) * 14).toFixed(2));
+        const custo = typeof item.custo === "number" ? item.custo : custoPadrao;
+        const preco = typeof item.preco === "number" ? item.preco : Number((custo * 1.55).toFixed(2));
+        return {
+          ...item,
+          sku: item.sku || `SER-${String(index + 1).padStart(3, "0")}`,
+          estoqueMinimo: item.estoqueMinimo ?? 2,
+          custo,
+          preco,
+          fornecedor: item.fornecedor || item.marca,
+          localizacao: item.localizacao || `A-${(index % 8) + 1}`,
+          ultimaEntrada: item.ultimaEntrada || "2026-04-23",
+          imagem: item.imagem || defaultImage
+        };
+      });
+    }
+
+    const STORAGE_KEY = "catalogo_sf_v1";
+    const persisted = localStorage.getItem(STORAGE_KEY);
+    let inventory = withDefaults(persisted ? JSON.parse(persisted) : initialProducts);
+    let editingId = null;
+
+    const body = document.getElementById("catalogBody");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const brandFilter = document.getElementById("brandFilter");
+    const stockFilter = document.getElementById("stockFilter");
+    const clearBtn = document.getElementById("clearBtn");
+    const visibleItems = document.getElementById("visibleItems");
+    const visibleStock = document.getElementById("visibleStock");
+    const totalStock = document.getElementById("totalStock");
+    const visibleCost = document.getElementById("visibleCost");
+    const visibleRevenue = document.getElementById("visibleRevenue");
+    const visibleMargin = document.getElementById("visibleMargin");
+    const noData = document.getElementById("noData");
+    const fSku = document.getElementById("fSku");
+    const fProduto = document.getElementById("fProduto");
+    const fMarca = document.getElementById("fMarca");
+    const fCategoria = document.getElementById("fCategoria");
+    const fQuantidade = document.getElementById("fQuantidade");
+    const fEstoqueMin = document.getElementById("fEstoqueMin");
+    const fCusto = document.getElementById("fCusto");
+    const fPreco = document.getElementById("fPreco");
+    const fFornecedor = document.getElementById("fFornecedor");
+    const fLocalizacao = document.getElementById("fLocalizacao");
+    const fEntrada = document.getElementById("fEntrada");
+    const fImagem = document.getElementById("fImagem");
+    const saveItemBtn = document.getElementById("saveItemBtn");
+    const newItemBtn = document.getElementById("newItemBtn");
+    const resetDataBtn = document.getElementById("resetDataBtn");
+    const syncStatus = document.getElementById("syncStatus");
+    let supabaseClient = null;
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      }).format(value);
+    }
+
+    function getStockStatus(item) {
+      if (item.quantidade <= 0) return "out";
+      if (item.quantidade <= item.estoqueMinimo) return "low";
+      return "ok";
+    }
+
+    function persistInventory() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(inventory));
+    }
+
+    function isSupabaseEnabled() {
+      return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase);
+    }
+
+    function setSyncStatus(message) {
+      syncStatus.textContent = message;
+    }
+
+    function generateId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return `id-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+    }
+
+    function nextSku() {
+      return `SER-${String(inventory.length + 1).padStart(3, "0")}`;
+    }
+
+    function normalizeInventory() {
+      inventory = inventory.map((item, idx) => ({
+        ...item,
+        id: item.id || `${item.sku || "SER"}-${idx}`,
+        sku: item.sku || `SER-${String(idx + 1).padStart(3, "0")}`,
+        categoria: item.categoria || "Serra",
+        quantidade: Number(item.quantidade) || 0,
+        estoqueMinimo: Number(item.estoqueMinimo) || 0,
+        custo: Number(item.custo) || 0,
+        preco: Number(item.preco) || 0,
+        fornecedor: item.fornecedor || item.marca || "",
+        localizacao: item.localizacao || "",
+        ultimaEntrada: item.ultimaEntrada || "2026-04-23",
+        imagem: item.imagem || defaultImage
+      }));
+    }
+
+    function clearForm() {
+      editingId = null;
+      fSku.value = nextSku();
+      fProduto.value = "";
+      fMarca.value = "";
+      fCategoria.value = "Serra";
+      fQuantidade.value = "0";
+      fEstoqueMin.value = "2";
+      fCusto.value = "0";
+      fPreco.value = "0";
+      fFornecedor.value = "";
+      fLocalizacao.value = "";
+      fEntrada.value = new Date().toISOString().slice(0, 10);
+      fImagem.value = defaultImage;
+      saveItemBtn.textContent = "Salvar item";
+    }
+
+    function loadForm(item) {
+      editingId = item.id;
+      fSku.value = item.sku;
+      fProduto.value = item.produto;
+      fMarca.value = item.marca;
+      fCategoria.value = item.categoria;
+      fQuantidade.value = String(item.quantidade);
+      fEstoqueMin.value = String(item.estoqueMinimo);
+      fCusto.value = String(item.custo);
+      fPreco.value = String(item.preco);
+      fFornecedor.value = item.fornecedor;
+      fLocalizacao.value = item.localizacao;
+      fEntrada.value = item.ultimaEntrada;
+      fImagem.value = item.imagem || defaultImage;
+      saveItemBtn.textContent = "Atualizar item";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function toDbRow(item) {
+      return {
+        id: item.id,
+        sku: item.sku,
+        produto: item.produto,
+        marca: item.marca,
+        categoria: item.categoria,
+        quantidade: item.quantidade,
+        estoque_minimo: item.estoqueMinimo,
+        custo: item.custo,
+        preco: item.preco,
+        fornecedor: item.fornecedor,
+        localizacao: item.localizacao,
+        ultima_entrada: item.ultimaEntrada,
+        imagem: item.imagem
+      };
+    }
+
+    function fromDbRow(row) {
+      return {
+        id: row.id,
+        sku: row.sku,
+        produto: row.produto,
+        marca: row.marca,
+        categoria: row.categoria,
+        quantidade: Number(row.quantidade) || 0,
+        estoqueMinimo: Number(row.estoque_minimo) || 0,
+        custo: Number(row.custo) || 0,
+        preco: Number(row.preco) || 0,
+        fornecedor: row.fornecedor || "",
+        localizacao: row.localizacao || "",
+        ultimaEntrada: row.ultima_entrada || "2026-04-23",
+        imagem: row.imagem || defaultImage
+      };
+    }
+
+    async function fetchInventoryFromSupabase() {
+      if (!supabaseClient) return;
+      const { data, error } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .select("*")
+        .order("sku", { ascending: true });
+      if (error) throw error;
+      inventory = withDefaults((data || []).map(fromDbRow));
+      normalizeInventory();
+      persistInventory();
+    }
+
+    async function upsertSupabaseItem(item) {
+      if (!supabaseClient) return;
+      const { error } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .upsert([toDbRow(item)], { onConflict: "id" });
+      if (error) throw error;
+    }
+
+    async function deleteSupabaseItem(id) {
+      if (!supabaseClient) return;
+      const { error } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
+    }
+
+    async function replaceAllSupabaseItems(items) {
+      if (!supabaseClient) return;
+      const { error: deleteError } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .delete()
+        .not("id", "is", null);
+      if (deleteError) throw deleteError;
+      const rows = items.map(toDbRow);
+      const { error: insertError } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .insert(rows);
+      if (insertError) throw insertError;
+    }
+
+    async function setupSupabaseRealtime() {
+      if (!isSupabaseEnabled()) {
+        setSyncStatus("Modo local: configure SUPABASE_URL e SUPABASE_ANON_KEY para sincronizar em tempo real.");
+        return;
+      }
+      try {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        await fetchInventoryFromSupabase();
+        setSyncStatus("Sincronizacao ativa com Supabase (tempo real).");
+        supabaseClient
+          .channel("estoque-realtime")
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: SUPABASE_TABLE },
+            async () => {
+              try {
+                await fetchInventoryFromSupabase();
+                fillFilters();
+                render();
+              } catch (err) {
+                console.error(err);
+              }
+            }
+          )
+          .subscribe();
+      } catch (err) {
+        console.error(err);
+        setSyncStatus("Falha ao conectar no Supabase. Operando em modo local.");
+      }
+    }
+
+    function fillFilters() {
+      const prevCategory = categoryFilter.value;
+      const prevBrand = brandFilter.value;
+      const categories = [...new Set(inventory.map((p) => p.categoria))].sort();
+      const brands = [...new Set(inventory.map((p) => p.marca))].sort();
+      categoryFilter.innerHTML = '<option value="">Todas as categorias</option>';
+      brandFilter.innerHTML = '<option value="">Todas as marcas</option>';
+
+      for (const category of categories) {
+        const option = document.createElement("option");
+        option.value = category;
+        option.textContent = category;
+        categoryFilter.appendChild(option);
+      }
+
+      for (const brand of brands) {
+        const option = document.createElement("option");
+        option.value = brand;
+        option.textContent = brand;
+        brandFilter.appendChild(option);
+      }
+      categoryFilter.value = categories.includes(prevCategory) ? prevCategory : "";
+      brandFilter.value = brands.includes(prevBrand) ? prevBrand : "";
+    }
+
+    function render() {
+      const term = searchInput.value.trim().toLowerCase();
+      const category = categoryFilter.value;
+      const brand = brandFilter.value;
+      const stockStatus = stockFilter.value;
+
+      const filtered = inventory.filter((item) => {
+        const matchText =
+          !term ||
+          item.produto.toLowerCase().includes(term) ||
+          item.marca.toLowerCase().includes(term) ||
+          item.sku.toLowerCase().includes(term) ||
+          item.fornecedor.toLowerCase().includes(term);
+        const matchCategory = !category || item.categoria === category;
+        const matchBrand = !brand || item.marca === brand;
+        const matchStock = !stockStatus || getStockStatus(item) === stockStatus;
+        return matchText && matchCategory && matchBrand && matchStock;
+      });
+
+      body.innerHTML = filtered
+        .map(
+          (item) => {
+            const status = getStockStatus(item);
+            const statusLabel = status === "out"
+              ? "Sem estoque"
+              : status === "low"
+                ? `Baixo estoque (min: ${item.estoqueMinimo})`
+                : "Estoque normal";
+            const statusClass = status === "out" ? "status-out" : status === "low" ? "status-low" : "status-ok";
+            return `
+            <article class="product-card">
+              <div class="product-media">
+                <img
+                  class="product-image"
+                  src="${escapeHtml(item.imagem || defaultImage)}"
+                  alt="Imagem de ${escapeHtml(item.produto)}"
+                  loading="lazy"
+                  onerror="this.onerror=null;this.src='${escapeHtml(defaultImage)}';"
+                />
+              </div>
+              <div class="product-content">
+                <div class="sku">${escapeHtml(item.sku)}</div>
+                <h3 class="product-title">${escapeHtml(item.produto)}</h3>
+                <div class="product-meta">Marca: ${escapeHtml(item.marca)}</div>
+                <div class="product-meta">Categoria: ${escapeHtml(item.categoria)}</div>
+                <div class="product-meta">Fornecedor: ${escapeHtml(item.fornecedor)}</div>
+                <div class="product-meta">Localizacao: ${escapeHtml(item.localizacao)} | Entrada: ${escapeHtml(item.ultimaEntrada)}</div>
+                <div class="price-line">
+                  <span class="price">Preco: ${formatCurrency(item.preco)}</span>
+                  <span class="cost">Custo: ${formatCurrency(item.custo)}</span>
+                </div>
+                <div class="status-badge ${statusClass}">
+                  Qtd: ${item.quantidade} - ${statusLabel}
+                </div>
+                <div class="card-actions">
+                  <button class="mini-btn" type="button" data-action="edit" data-id="${escapeHtml(item.id)}">Editar</button>
+                  <button class="mini-btn danger" type="button" data-action="delete" data-id="${escapeHtml(item.id)}">Excluir</button>
+                </div>
+              </div>
+            </article>
+          `;
+          }
+        )
+        .join("");
+
+      const visibleQty = filtered.reduce((acc, item) => acc + item.quantidade, 0);
+      const totalQty = inventory.reduce((acc, item) => acc + item.quantidade, 0);
+      const costSum = filtered.reduce((acc, item) => acc + item.custo * item.quantidade, 0);
+      const revenueSum = filtered.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+
+      visibleItems.textContent = String(filtered.length);
+      visibleStock.textContent = String(visibleQty);
+      totalStock.textContent = String(totalQty);
+      visibleCost.textContent = formatCurrency(costSum);
+      visibleRevenue.textContent = formatCurrency(revenueSum);
+      visibleMargin.textContent = formatCurrency(revenueSum - costSum);
+      noData.style.display = filtered.length ? "none" : "block";
+    }
+
+    searchInput.addEventListener("input", render);
+    categoryFilter.addEventListener("change", render);
+    brandFilter.addEventListener("change", render);
+    stockFilter.addEventListener("change", render);
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      categoryFilter.value = "";
+      brandFilter.value = "";
+      stockFilter.value = "";
+      render();
+    });
+
+    saveItemBtn.addEventListener("click", async () => {
+      if (!fProduto.value.trim() || !fMarca.value.trim() || !fCategoria.value.trim()) {
+        alert("Preencha Produto, Marca e Categoria.");
+        return;
+      }
+
+      const itemData = {
+        id: editingId || generateId(),
+        sku: fSku.value.trim() || nextSku(),
+        produto: fProduto.value.trim(),
+        marca: fMarca.value.trim(),
+        categoria: fCategoria.value.trim(),
+        quantidade: Number(fQuantidade.value) || 0,
+        estoqueMinimo: Number(fEstoqueMin.value) || 0,
+        custo: Number(fCusto.value) || 0,
+        preco: Number(fPreco.value) || 0,
+        fornecedor: fFornecedor.value.trim() || fMarca.value.trim(),
+        localizacao: fLocalizacao.value.trim(),
+        ultimaEntrada: fEntrada.value || new Date().toISOString().slice(0, 10),
+        imagem: fImagem.value.trim() || defaultImage
+      };
+
+      if (editingId) {
+        inventory = inventory.map((item) => (item.id === editingId ? itemData : item));
+      } else {
+        inventory.unshift(itemData);
+      }
+      normalizeInventory();
+      persistInventory();
+      if (supabaseClient) {
+        try {
+          await upsertSupabaseItem(itemData);
+          await fetchInventoryFromSupabase();
+        } catch (err) {
+          console.error(err);
+          alert("Nao foi possivel salvar no Supabase. O item foi salvo apenas localmente.");
+        }
+      }
+      fillFilters();
+      render();
+      clearForm();
+    });
+
+    newItemBtn.addEventListener("click", clearForm);
+
+    resetDataBtn.addEventListener("click", async () => {
+      const ok = confirm("Restaurar catalogo inicial? Isso remove alteracoes salvas neste navegador.");
+      if (!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      inventory = withDefaults(initialProducts);
+      normalizeInventory();
+      if (supabaseClient) {
+        try {
+          await replaceAllSupabaseItems(inventory);
+          await fetchInventoryFromSupabase();
+        } catch (err) {
+          console.error(err);
+          alert("Falha ao restaurar no Supabase. Dados restaurados apenas localmente.");
+        }
+      }
+      fillFilters();
+      render();
+      clearForm();
+    });
+
+    body.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+      const id = button.getAttribute("data-id");
+      const action = button.getAttribute("data-action");
+      const item = inventory.find((p) => p.id === id);
+      if (!item) return;
+
+      if (action === "edit") {
+        loadForm(item);
+      }
+      if (action === "delete") {
+        const ok = confirm(`Excluir o item "${item.produto}"?`);
+        if (!ok) return;
+        (async () => {
+          inventory = inventory.filter((p) => p.id !== id);
+          persistInventory();
+          if (supabaseClient) {
+            try {
+              await deleteSupabaseItem(id);
+              await fetchInventoryFromSupabase();
+            } catch (err) {
+              console.error(err);
+              alert("Falha ao excluir no Supabase. Exclusao aplicada apenas localmente.");
+            }
+          }
+          fillFilters();
+          render();
+          if (editingId === id) clearForm();
+        })();
+      }
+    });
+
+    async function initApp() {
+      normalizeInventory();
+      await setupSupabaseRealtime();
+      fillFilters();
+      render();
+      clearForm();
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
